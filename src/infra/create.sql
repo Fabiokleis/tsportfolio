@@ -9,7 +9,7 @@ create table users (
     updatedAt timestamp not null default current_timestamp,
     tokenDate timestamp unique,
     resetToken text unique,
-    bio text not null
+    bio text 
 );
 
 create table subscribedemails(

@@ -6,9 +6,13 @@ const UserService = {
     const user: Promise<User> = Query.getUserById(id)
     return user
   },
-  createUser: (userdata: User): Promise<number[]> => {
-    const user: Promise<number[]> = Query.saveUser(userdata)
+  createUser: (userdata: User): Promise<User[]> => {
+    const user: Promise<User[]> = Query.saveUser(userdata)
     return user
+  },
+  deleteUser: (id: number): Promise<number> => {
+    const deleted: Promise<number> = Query.deleteUserById(id)
+    return deleted
   }
 }
 

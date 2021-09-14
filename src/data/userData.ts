@@ -6,9 +6,15 @@ const Query = {
     const user = await knex<User, UserEntity>('users').select('*').where({ id })
     return user
   },
-  saveUser: async (userdata: User): Promise<number[]> => {
-    const user = await knex<User, UserEntity>('users').insert(userdata)
+  saveUser: async (userdata: User): Promise<User[]> => {
+    const user = await knex<User, UserEntity>('users')
+      .insert(userdata).returning(['id', 'name', 'email'])
     return user
+  },
+  deleteUserById: async (id: number): Promise<number> => {
+    const deletedUser = await knex<User, UserEntity>('users')
+      .where({ id }).delete()
+    return deletedUser
   }
 }
 
