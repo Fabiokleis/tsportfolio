@@ -1,3 +1,3 @@
 # Typescript
 
-Migrating portfolio backend to typescript
+Learning Typescript
