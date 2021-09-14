@@ -1,11 +1,13 @@
 import express, { Router, urlencoded } from 'express'
 import UserService from '../service/userService'
+import UserValidation from '../validate/user'
 
 const router = Router()
 
 router.get('/:id', urlencoded({ extended: true }), async (req, res, next) => {
   try {
-    const user = await UserService.getUser(Number(req.params.id))
+    const id = await UserValidation.userId(req.params)
+    const user = await UserService.getUser(id)
     res.status(200).json({ user })
   } catch (err) {
     next(err)
@@ -14,7 +16,8 @@ router.get('/:id', urlencoded({ extended: true }), async (req, res, next) => {
 
 router.post('/', express.json(), async (req, res, next) => {
   try {
-    const user = await UserService.createUser(req.body)
+    const data = await UserValidation.createUser(req.body)
+    const user = await UserService.createUser(data)
     res.status(200).json({ user })
   } catch (err) {
     next(err)
@@ -23,7 +26,8 @@ router.post('/', express.json(), async (req, res, next) => {
 
 router.delete('/:id', urlencoded({ extended: true }), async (req, res, next) => {
   try {
-    const deleted = await UserService.deleteUser(Number(req.params.id))
+    const id = await UserValidation.userId(req.params)
+    const deleted = await UserService.deleteUser(id)
     res.status(200).json({ deleted })
   } catch (err) {
     next(err)
