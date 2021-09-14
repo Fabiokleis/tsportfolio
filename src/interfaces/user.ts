@@ -1,14 +1,20 @@
 export interface User {
-    id?: number;
-    name?: string;
-    email?: string;
-    password?: string;
+    id: number;
+    name: string;
+    email: string;
+    password: string;
     date?: string | Date | undefined;
     createdat?: string | Date;
     updatedat?: string | Date;
     tokendate?: string | Date;
     resettoken?: string;
     bio?: string;
+}
+
+export interface NewUser {
+    id: number,
+    name: string,
+    email: string
 }
 
 export interface UserEntity {

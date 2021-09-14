@@ -1,12 +1,6 @@
 import Joi from 'joi'
 import { User } from '../interfaces/user'
 
-interface createUserBody {
-    name: string,
-    email: string,
-    password: string
-}
-
 interface ParamsDictionary {
     [key: string]: string;
 }
@@ -24,7 +18,7 @@ const UserValidator = {
     })
     return UserSchema.validateAsync(params)
   },
-  createUser: (body: createUserBody): Promise<User> => {
+  createUser: (body: User): Promise<User> => {
     const UserSchema = Joi.object({
       name: Joi.string()
         .pattern(/^[a-zA-Z][A-Za-z_0-9]{2,30}$/)
