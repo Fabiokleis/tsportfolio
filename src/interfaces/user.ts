@@ -17,6 +17,11 @@ export interface NewUser {
     email: string
 }
 
+export interface Login {
+    email: string,
+    password: string
+}
+
 export interface UserEntity {
     id: number;
     name: string;

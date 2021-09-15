@@ -24,6 +24,17 @@ router.post('/', express.json(), async (req, res, next) => {
   }
 })
 
+router.post('/login', express.json(), async (req, res, next) => {
+  try {
+    const data = await UserValidation.loginUser(req.body)
+    const Authorization = await UserService.loginUser(data)
+    req.header(Authorization)
+    res.status(200).json({ message: 'sucessfully loggin!' })
+  } catch (err) {
+    next(err)
+  }
+})
+
 router.delete('/:id', urlencoded({ extended: true }), async (req, res, next) => {
   try {
     const id = await UserValidation.userId(req.params)

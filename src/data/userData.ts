@@ -7,8 +7,12 @@ const Query = {
     return user
   },
   saveUser: async (userdata: User): Promise<NewUser[]> => {
-    const user = await knex<User, UserEntity>('users')
+    const user = await knex<NewUser>('users')
       .insert(userdata).returning(['id', 'name', 'email'])
+    return user
+  },
+  verifyUserEmail: async (email: string): Promise<User[]> => {
+    const user = await knex<User>('users').select('id', 'name', 'email', 'password').where({ email })
     return user
   },
   deleteUserById: async (id: number): Promise<number> => {
