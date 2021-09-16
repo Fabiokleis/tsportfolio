@@ -1,6 +1,7 @@
 import express, { Router, urlencoded } from 'express'
 import UserService from '../service/userService'
 import UserValidation from '../validate/user'
+import auth from '../service/authService'
 
 const router = Router()
 
@@ -28,18 +29,19 @@ router.post('/login', express.json(), async (req, res, next) => {
   try {
     const data = await UserValidation.loginUser(req.body)
     const Authorization = await UserService.loginUser(data)
-    req.header(Authorization)
-    res.status(200).json({ message: 'sucessfully loggin!' })
+    res.header({ Authorization })
+    res.status(200).json({ message: 'sucessfully login!' })
   } catch (err) {
     next(err)
   }
 })
 
-router.delete('/:id', urlencoded({ extended: true }), async (req, res, next) => {
+router.delete('/', auth, async (req, res, next) => {
   try {
-    const id = await UserValidation.userId(req.params)
-    const deleted = await UserService.deleteUser(id)
-    res.status(200).json({ deleted })
+    console.log(req.body)
+    // const id = await UserValidation.userId({ id: '10' })
+    // const deleted = await UserService.deleteUser(id)
+    res.status(200).json()
   } catch (err) {
     next(err)
   }

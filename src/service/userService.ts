@@ -22,7 +22,8 @@ const UserService = {
       const hashValidation = bcrypt.compareSync(userdata.password, user[0].password)
       if (hashValidation) {
         const SECRET = process.env.TOKEN_SECRET as jwt.Secret
-        const token = jwt.sign({ user }, SECRET, { expiresIn: '1h' })
+        const { id, email, name } = user[0]
+        const token = jwt.sign({ id, email, name }, SECRET, { expiresIn: '1h' })
         return token
       }
     }

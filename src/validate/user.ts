@@ -20,6 +20,9 @@ const UserValidator = {
   },
   createUser: (body: Login): Promise<User> => {
     const UserSchema = Joi.object({
+      name: Joi.string()
+        .pattern(/^[a-zA-Z][A-Za-z_0-9]{2,30}$/)
+        .required(),
       email: Joi.string()
         .email()
         .min(5)
