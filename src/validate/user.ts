@@ -9,6 +9,16 @@ interface Id {
     id: number
 }
 
+const expValidation = (value: number, helpers: Joi.CustomHelpers): number | void => {
+  const now = new Date()
+  const exp = new Date(value * 1000)
+  if (exp.getHours() < now.getHours() && exp.getDate() === now.getDate()) {
+    return value
+  } else {
+    helpers.error('token expired, login again!')
+  }
+}
+
 const UserValidator = {
   userId: (params: ParamsDictionary): Promise<Id> => {
     const UserSchema = Joi.object({
@@ -65,7 +75,7 @@ const UserValidator = {
       iat: Joi.number()
         .required(),
       exp: Joi.number()
-        .required()
+        .required().custom(expValidation, 'jwt expiration validatite')
     })
     return UserSchema.validateAsync(body)
   }
