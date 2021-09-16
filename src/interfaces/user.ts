@@ -17,6 +17,14 @@ export interface NewUser {
     email: string
 }
 
+export interface UserDecoded {
+    id: number,
+    email: string,
+    name: string,
+    iat: number,
+    exp: number
+}
+
 export interface Login {
     email: string,
     password: string

@@ -39,9 +39,9 @@ router.post('/login', express.json(), async (req, res, next) => {
 router.delete('/', auth, async (req, res, next) => {
   try {
     console.log(req.body)
-    // const id = await UserValidation.userId({ id: '10' })
-    // const deleted = await UserService.deleteUser(id)
-    res.status(200).json()
+    const { id } = await UserValidation.jwtUserDecoded(req.body)
+    const deleted = await UserService.deleteUser({ id })
+    res.status(200).json({ deleted })
   } catch (err) {
     next(err)
   }
